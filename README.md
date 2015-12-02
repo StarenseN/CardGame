@@ -9,7 +9,7 @@ A shitty essay on Meteor.js
    |_ Dragula (JS drag and drop - https://github.com/rfox90/meteor-dragula)<br>
    
    These 4 packages are easily added at once by this command line:<br> 
-      meteor add coffeescript stylus mquandalle:jade ahref:dragula
+    > meteor add coffeescript stylus mquandalle:jade ahref:dragula
    
    Inspired by http://sirile.github.io/2015/06/17/meteor-example-with-coffeescript-stylus-and-jade.html
   
