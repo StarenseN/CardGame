@@ -1,3 +1,5 @@
+import { type UnitType } from './CardType'
+
 export type CardType = 'unit' | 'consumable'
 export type CardRarity = 'common' | 'rare' | 'epic' | 'legendary'
 
@@ -10,6 +12,7 @@ export interface CardEffect {
 export interface CardBase {
   id: string
   type: CardType
+  unitType?: UnitType // For rock-paper-scissors
   power: number
   rarity: CardRarity
   name?: string
@@ -20,6 +23,7 @@ export interface CardBase {
 export class Card implements CardBase {
   id: string
   type: CardType
+  unitType?: UnitType
   power: number
   rarity: CardRarity
   name?: string
@@ -29,6 +33,7 @@ export class Card implements CardBase {
   constructor(data: Omit<CardBase, 'fatigued'> & { fatigued?: boolean }) {
     this.id = data.id
     this.type = data.type
+    this.unitType = data.unitType
     this.power = data.power
     this.rarity = data.rarity
     this.name = data.name
@@ -44,6 +49,7 @@ export class Card implements CardBase {
     return new Card({
       id: this.id,
       type: this.type,
+      unitType: this.unitType,
       power: this.power,
       rarity: this.rarity,
       name: this.name,

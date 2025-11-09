@@ -1,24 +1,38 @@
 import { describe, it, expect } from 'vitest'
-import { CARD_TEMPLATES, generateCardFromTemplate } from './cardTemplates'
+import { CARD_POOL, getCardById } from './cardTemplates'
 
-describe('Card Templates', () => {
-  it('should have at least 20 card templates', () => {
-    expect(CARD_TEMPLATES.length).toBeGreaterThanOrEqual(20)
+describe('Balanced Card Pool', () => {
+  it('should have exactly 40 cards', () => {
+    expect(CARD_POOL.length).toBe(40)
   })
 
-  it('should generate a card from template', () => {
-    const template = CARD_TEMPLATES[0]
-    const card = generateCardFromTemplate(template, 'card-1')
-
-    expect(card.id).toBe('card-1')
-    expect(card.type).toBe(template.type)
-    expect(card.power).toBe(template.power)
-    expect(card.rarity).toBe(template.rarity)
+  it('should have no card with power > 6', () => {
+    const maxPower = Math.max(...CARD_POOL.map(c => c.power))
+    expect(maxPower).toBeLessThanOrEqual(6)
   })
 
-  it('should have variety of rarities', () => {
-    const rarities = new Set(CARD_TEMPLATES.map(t => t.rarity))
-    expect(rarities.has('common')).toBe(true)
-    expect(rarities.has('rare')).toBe(true)
+  it('should have balanced type distribution', () => {
+    const warriors = CARD_POOL.filter(c => c.unitType === 'warrior').length
+    const mages = CARD_POOL.filter(c => c.unitType === 'mage').length
+    const creatures = CARD_POOL.filter(c => c.unitType === 'creature').length
+
+    // Each type should have 10-15 cards
+    expect(warriors).toBeGreaterThanOrEqual(10)
+    expect(warriors).toBeLessThanOrEqual(15)
+    expect(mages).toBeGreaterThanOrEqual(10)
+    expect(mages).toBeLessThanOrEqual(15)
+    expect(creatures).toBeGreaterThanOrEqual(10)
+    expect(creatures).toBeLessThanOrEqual(15)
+  })
+
+  it('should have starter cards (unlocked by default)', () => {
+    const starters = CARD_POOL.filter(c => c.starterCard)
+    expect(starters.length).toBe(15)
+  })
+
+  it('should retrieve card by ID', () => {
+    const card = getCardById('warrior-basic-1')
+    expect(card).toBeDefined()
+    expect(card?.id).toBe('warrior-basic-1')
   })
 })
