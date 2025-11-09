@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "SlashCommand(/activate-superpowers)",
+      "SlashCommand(/sync-memory)",
+      "Skill(superpowers:brainstorming)",
+      "Bash(git init:*)",
+      "Bash(git remote add:*)",
+      "Bash(git pull:*)",
+      "Skill(superpowers:writing-plans)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Skill(superpowers:executing-plans)",
+      "Bash(npm create:*)",
+      "Bash(npx:*)",
+      "Bash(npm install:*)",
+      "Bash(node_modules/.bin/tailwindcss:*)",
+      "Bash(npm test:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
