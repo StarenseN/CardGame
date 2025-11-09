@@ -1,4 +1,4 @@
-import { Card, CardType, CardRarity, CardEffect } from '../types/Card'
+import { Card, type CardType, type CardRarity, type CardEffect } from '../types/Card'
 
 export interface CardTemplate {
   type: CardType

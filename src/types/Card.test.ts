@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { Card, createCard } from './Card'
+import { createCard } from './Card'
 
 describe('Card', () => {
   it('should create a basic unit card', () => {
