@@ -117,6 +117,27 @@ describe('Run Store - Scav/PMC Logic', () => {
       expect(useCollectionStore.getState().ownedInstances.length).toBe(instancesBefore + deckSize)
     })
 
+    it('should use templateId for reliable card tracking on extract', () => {
+      useRunStore.getState().startRun('scav')
+      const deck = useRunStore.getState().currentDeck
+
+      // Verify all cards have templateId set
+      deck.forEach(card => {
+        expect(card.templateId).toBeDefined()
+        expect(card.templateId).toBeTruthy()
+      })
+
+      useRunStore.getState().extract()
+
+      // Verify cards were added to collection with correct templateId
+      const instances = useCollectionStore.getState().ownedInstances
+      deck.forEach(card => {
+        const instance = instances.find(i => i.instanceId === card.id)
+        expect(instance).toBeDefined()
+        expect(instance?.templateId).toBe(card.templateId)
+      })
+    })
+
     it('should not add PMC deck cards to collection on extract (already owned)', () => {
       // Add 20 instances
       for (let i = 0; i < 20; i++) {

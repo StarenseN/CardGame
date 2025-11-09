@@ -11,6 +11,7 @@ export interface CardEffect {
 
 export interface CardBase {
   id: string
+  templateId?: string
   type: CardType
   unitType?: UnitType // For rock-paper-scissors
   power: number
@@ -22,6 +23,7 @@ export interface CardBase {
 
 export class Card implements CardBase {
   id: string
+  templateId?: string
   type: CardType
   unitType?: UnitType
   power: number
@@ -32,6 +34,7 @@ export class Card implements CardBase {
 
   constructor(data: Omit<CardBase, 'fatigued'> & { fatigued?: boolean }) {
     this.id = data.id
+    this.templateId = data.templateId
     this.type = data.type
     this.unitType = data.unitType
     this.power = data.power
@@ -48,6 +51,7 @@ export class Card implements CardBase {
   clone(): Card {
     return new Card({
       id: this.id,
+      templateId: this.templateId,
       type: this.type,
       unitType: this.unitType,
       power: this.power,

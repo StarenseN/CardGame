@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { CARD_POOL, getCardById } from './cardTemplates'
+import { CARD_POOL, getCardById, generateCardFromTemplate } from './cardTemplates'
 
 describe('Balanced Card Pool', () => {
   it('should have exactly 40 cards', () => {
@@ -34,5 +34,14 @@ describe('Balanced Card Pool', () => {
     const card = getCardById('warrior-basic-1')
     expect(card).toBeDefined()
     expect(card?.id).toBe('warrior-basic-1')
+  })
+
+  it('should set templateId when generating card from template', () => {
+    const template = getCardById('warrior-basic-1')!
+    const card = generateCardFromTemplate(template, 'test-instance-123')
+
+    expect(card.templateId).toBe('warrior-basic-1')
+    expect(card.id).toBe('test-instance-123')
+    expect(card.name).toBe(template.name)
   })
 })

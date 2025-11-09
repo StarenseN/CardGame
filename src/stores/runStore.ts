@@ -2,7 +2,7 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { Card } from '../types/Card'
 import { useCollectionStore } from './collectionStore'
-import { getCardById, generateCardFromTemplate, CARD_POOL } from '../data/cardTemplates'
+import { getCardById, generateCardFromTemplate } from '../data/cardTemplates'
 
 export type RunType = 'scav' | 'pmc'
 
@@ -108,11 +108,12 @@ export const useRunStore = create<RunState>()(
         // If scav run, add deck cards as owned instances
         if (state.runType === 'scav') {
           state.currentDeck.forEach(card => {
-            // Find template by name (card instances have unique IDs but share names)
-            const template = CARD_POOL.find(t => t.name === card.name)
-            if (template) {
-              collection.addCardInstance(template.id, card.id)
+            // Use templateId from card for reliable tracking
+            if (!card.templateId) {
+              console.error(`Card ${card.id} (${card.name}) missing templateId, skipping`)
+              return
             }
+            collection.addCardInstance(card.templateId, card.id)
           })
         }
         // PMC: cards are already in collection, no need to add

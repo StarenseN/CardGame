@@ -473,6 +473,7 @@ export function getUnlockableCards(): CardTemplate[] {
 export function generateCardFromTemplate(template: CardTemplate, instanceId: string): Card {
   return new Card({
     id: instanceId,
+    templateId: template.id,
     type: template.type,
     unitType: template.unitType,
     power: template.power,

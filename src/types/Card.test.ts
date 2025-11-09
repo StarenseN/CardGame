@@ -30,4 +30,20 @@ describe('Card', () => {
     card.fatigued = true
     expect(card.getEffectivePower()).toBe(7)
   })
+
+  it('should preserve templateId when cloning', () => {
+    const card = createCard({
+      id: 'test-3',
+      templateId: 'warrior-basic-1',
+      type: 'unit',
+      power: 5,
+      rarity: 'common'
+    })
+
+    const cloned = card.clone()
+
+    expect(cloned.templateId).toBe('warrior-basic-1')
+    expect(cloned.id).toBe(card.id)
+    expect(cloned.power).toBe(card.power)
+  })
 })
